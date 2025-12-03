@@ -57,10 +57,6 @@ const Hero = () => {
             {/* Profile Image */}
             <img 
                src= "../images/1.png"
-               onError={(e) => {
-                 const target = e.target as HTMLImageElement;
-                 target.src = "https://images.unsplash.com/photo-1544367563-12123d8966cd?q=80&w=1000&auto=format&fit=crop"; 
-               }}
                alt="Madhu Mohanan" 
                className="relative z-10 w-full h-full object-cover blob-shape shadow-2xl transition-transform hover:scale-[1.02] duration-500"
             />

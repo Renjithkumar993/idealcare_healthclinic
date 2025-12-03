@@ -46,10 +46,6 @@ export const About: React.FC = () => {
              <div className="absolute inset-0 bg-brand-200 blob-shape rotate-6 scale-105 opacity-50"></div>
              <img 
                src="../images/1.png"
-               onError={(e) => {
-                 const target = e.target as HTMLImageElement;
-                 target.src = "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=800&auto=format&fit=crop"; 
-               }}
                alt="Madhu Mohanan" 
                className="relative z-10 w-full rounded-[3rem] shadow-xl rotate-2 hover:rotate-0 transition-transform duration-500"
              />
