@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button } from '../components/Button';
-import { Star, Leaf, Heart, ShieldCheck, ArrowRight, Instagram } from 'lucide-react';
+import { Star, Leaf, Heart, ShieldCheck, ArrowRight, Instagram,  Users, Baby, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import myLogo from '/1.png'
 
 const Hero = () => {
   return (
@@ -56,7 +57,7 @@ const Hero = () => {
             
             {/* Profile Image */}
             <img 
-               src= "../images/1.png"
+               src= {myLogo}
                alt="Madhu Mohanan" 
                className="relative z-10 w-full h-full object-cover blob-shape shadow-2xl transition-transform hover:scale-[1.02] duration-500"
             />
@@ -105,6 +106,74 @@ const Features = () => (
   </section>
 );
 
+const WhoCanBenefit = () => (
+   <section className="py-24 bg-brand-900 text-white relative overflow-hidden">
+     {/* Decorative BG */}
+     <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-10">
+       <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-[100px]"></div>
+       <div className="absolute bottom-10 right-10 w-96 h-96 bg-brand-400 rounded-full blur-[120px]"></div>
+     </div>
+ 
+     <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
+         <div className="max-w-xl">
+           <span className="text-brand-300 font-bold uppercase tracking-wider text-sm mb-2 block">Inclusive Care</span>
+           <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-6">
+             Who Can Benefit?
+           </h2>
+           <p className="text-brand-100 text-lg leading-relaxed">
+             Our holistic approach is designed for everyone. Whether you are dealing with a sudden illness or a long-standing condition, natural medicine offers a gentle path to recovery.
+           </p>
+         </div>
+         <Link to="/contact">
+           <Button variant="secondary" className="bg-brand-100 text-brand-900 hover:bg-white border-none">
+             Get Started Today
+           </Button>
+         </Link>
+       </div>
+ 
+       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+         {[
+           {
+             icon: Baby,
+             title: "Children & Infants",
+             desc: "Gentle relief for colic, teething, allergies, and recurrent colds without harsh chemicals.",
+             color: "bg-coral-500"
+           },
+           {
+             icon: Users,
+             title: "Adults",
+             desc: "Stress management, hormonal balance, digestive health, and chronic pain solutions.",
+             color: "bg-brand-500"
+           },
+           {
+             icon: Heart,
+             title: "Seniors",
+             desc: "Support for arthritis, mobility, sleep issues, and maintaining vitality in later years.",
+             color: "bg-brand-600"
+           },
+           {
+             icon: Activity,
+             title: "Chronic & Acute",
+             desc: "From sudden flus to long-term autoimmune conditions, we address the full spectrum.",
+             color: "bg-brand-700"
+           }
+         ].map((item, i) => (
+           <div key={i} className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-[2rem] hover:bg-white/10 transition-all duration-300 group">
+              <div className={`w-14 h-14 ${item.color} rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg group-hover:scale-110 transition-transform`}>
+                 <item.icon className="w-7 h-7" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
+              <p className="text-brand-100/80 leading-relaxed text-sm">
+                 {item.desc}
+              </p>
+           </div>
+         ))}
+       </div>
+     </div>
+   </section>
+ );
+ 
 const Reviews = () => (
   <section className="py-24 bg-sand-50 overflow-hidden">
      <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -194,6 +263,7 @@ export const Home: React.FC = () => {
     <>
       <Hero />
       <Features />
+      <WhoCanBenefit />
       <Reviews />
       <InstagramFeed />
     </>
