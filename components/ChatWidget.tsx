@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
+import { MessageCircle, X, Send, Bot } from 'lucide-react';
 import { generateChatResponse } from '../services/geminiService';
 import { ChatMessage, ChatSender } from '../types';
+import { Button, Form, InputGroup } from 'react-bootstrap';
 
 export const ChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -69,50 +70,55 @@ export const ChatWidget: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
+    <div className="position-fixed bottom-0 end-0 mb-4 me-4 d-flex flex-column align-items-end z-3" style={{ pointerEvents: 'none' }}>
       {/* Chat Window */}
       <div 
-        className={`pointer-events-auto mb-4 w-[350px] sm:w-[400px] bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 origin-bottom-right border border-slate-100 ${
-          isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 translate-y-10 hidden'
-        }`}
+        className={`bg-white rounded-4 shadow-lg overflow-hidden transition-all duration-300 border mb-3 ${isOpen ? 'd-block' : 'd-none'}`}
+        style={{ width: '350px', maxWidth: '90vw', pointerEvents: 'auto' }}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-brand-800 to-brand-600 p-4 flex justify-between items-center text-white">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-white/20 rounded-full">
-              <Bot className="w-5 h-5" />
+        <div className="bg-brand-600 p-3 d-flex justify-content-between align-items-center text-white rounded-top-4">
+          <div className="d-flex align-items-center gap-2">
+            <div className="p-2 bg-white bg-opacity-25 rounded-circle d-flex">
+              <Bot size={20} />
             </div>
             <div>
-              <h3 className="font-bold text-sm">Ideal Cure Assistant</h3>
-              <p className="text-xs text-brand-100">Powered by Gemini AI</p>
+              <h3 className="h6 mb-0 fw-bold">Ideal Cure Assistant</h3>
+              <p className="mb-0 small text-white-50" style={{ fontSize: '0.75rem' }}>Powered by Gemini AI</p>
             </div>
           </div>
-          <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 p-1 rounded-full transition-colors">
-            <X className="w-5 h-5" />
+          <button onClick={() => setIsOpen(false)} className="btn btn-link text-white p-0 text-decoration-none">
+            <X size={20} />
           </button>
         </div>
 
         {/* Messages */}
-        <div className="h-[400px] overflow-y-auto p-4 bg-slate-50 space-y-4">
+        <div className="bg-light p-3 overflow-y-auto" style={{ height: '350px' }}>
           {messages.map((msg) => (
-            <div key={msg.id} className={`flex ${msg.sender === ChatSender.USER ? 'justify-end' : 'justify-start'}`}>
+            <div key={msg.id} className={`d-flex mb-3 ${msg.sender === ChatSender.USER ? 'justify-content-end' : 'justify-content-start'}`}>
               <div 
-                className={`max-w-[85%] rounded-2xl p-3 text-sm leading-relaxed ${
+                className={`p-2 px-3 small ${
                   msg.sender === ChatSender.USER 
-                    ? 'bg-brand-600 text-white rounded-br-none' 
-                    : 'bg-white text-slate-700 border border-slate-200 rounded-bl-none shadow-sm'
+                    ? 'bg-brand-600 text-white shadow-sm' 
+                    : 'bg-white text-dark border shadow-sm'
                 }`}
+                style={{ 
+                  borderRadius: '1rem', 
+                  maxWidth: '85%',
+                  borderBottomRightRadius: msg.sender === ChatSender.USER ? '0' : '1rem',
+                  borderBottomLeftRadius: msg.sender === ChatSender.BOT ? '0' : '1rem',
+                }}
               >
                 {msg.text}
               </div>
             </div>
           ))}
           {isLoading && (
-             <div className="flex justify-start">
-               <div className="bg-white text-slate-500 p-3 rounded-2xl rounded-bl-none shadow-sm text-xs flex items-center space-x-2">
-                 <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                 <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                 <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+             <div className="d-flex mb-3 justify-content-start">
+               <div className="bg-white text-secondary p-2 px-3 rounded shadow-sm d-flex gap-1" style={{ borderBottomLeftRadius: '0', borderRadius: '1rem' }}>
+                 <div className="spinner-grow spinner-grow-sm text-secondary" style={{ width: '0.5rem', height: '0.5rem' }} role="status"></div>
+                 <div className="spinner-grow spinner-grow-sm text-secondary" style={{ width: '0.5rem', height: '0.5rem', animationDelay: '0.2s' }} role="status"></div>
+                 <div className="spinner-grow spinner-grow-sm text-secondary" style={{ width: '0.5rem', height: '0.5rem', animationDelay: '0.4s' }} role="status"></div>
                </div>
              </div>
           )}
@@ -120,31 +126,37 @@ export const ChatWidget: React.FC = () => {
         </div>
 
         {/* Input */}
-        <div className="p-3 bg-white border-t border-slate-100 flex gap-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyPress}
-            placeholder="Type your message..."
-            className="flex-1 px-4 py-2 bg-slate-50 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 border-transparent border"
-          />
-          <button 
-            onClick={handleSend}
-            disabled={!input.trim() || isLoading}
-            className="p-2 bg-brand-600 text-white rounded-full hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            <Send className="w-5 h-5" />
-          </button>
+        <div className="p-2 bg-white border-top">
+          <InputGroup>
+            <Form.Control
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Type your message..."
+              className="rounded-pill bg-light border-0 px-3 py-2 fs-6"
+              style={{ boxShadow: 'none' }}
+            />
+            <Button 
+              onClick={handleSend}
+              disabled={!input.trim() || isLoading}
+              variant="primary"
+              className="rounded-circle ms-2 d-flex align-items-center justify-content-center p-2"
+              style={{ width: '40px', height: '40px' }}
+            >
+              <Send size={18} />
+            </Button>
+          </InputGroup>
         </div>
       </div>
 
       {/* Toggle Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="pointer-events-auto h-14 w-14 bg-brand-600 hover:bg-brand-700 text-white rounded-full shadow-lg shadow-brand-600/40 flex items-center justify-center transition-all transform hover:scale-105 active:scale-95"
+        className="btn btn-primary rounded-circle shadow-lg d-flex align-items-center justify-content-center"
+        style={{ width: '60px', height: '60px', pointerEvents: 'auto' }}
       >
-        {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+        {isOpen ? <X size={28} /> : <MessageCircle size={28} />}
       </button>
     </div>
   );

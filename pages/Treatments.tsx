@@ -1,7 +1,9 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 const treatments = [
   {
@@ -44,41 +46,50 @@ const treatments = [
 
 export const Treatments: React.FC = () => {
   return (
-    <div className="bg-sand-50 min-h-screen pb-24">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <Breadcrumbs />
-        
-        <div className="text-center max-w-2xl mx-auto mb-16">
-           <h1 className="text-4xl md:text-5xl font-heading font-bold text-brand-900 mb-6">
-             Our Expertise
-           </h1>
-           <p className="text-lg text-gray-600">
-             Comprehensive care for acute and chronic conditions. We treat the individual, not just the symptoms.
-           </p>
-        </div>
+    <>
+      <Helmet>
+        <title>Our Treatments - Ideal Cure Homeopathy</title>
+        <meta name="description" content="Comprehensive homeopathic care for acute and chronic conditions, including mental health, dermatology, respiratory, and more." />
+      </Helmet>
+      <div className="bg-sand-50 min-vh-100 pb-5">
+        <Container className="py-4">
+          <Breadcrumbs />
+          
+          <div className="text-center mx-auto mb-5" style={{ maxWidth: '42rem' }}>
+             <h1 className="display-5 font-heading fw-bold text-brand-900 mb-4">
+               Our Expertise
+             </h1>
+             <p className="fs-5 text-secondary">
+               Comprehensive care for acute and chronic conditions. We treat the individual, not just the symptoms.
+             </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-           {treatments.map((t, i) => (
-             <Link 
-               to="/contact" 
-               key={i}
-               className="group bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-50 flex flex-col"
-             >
-                <div className="h-48 overflow-hidden">
-                   <img src={t.img} alt={t.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                </div>
-                <div className="p-8 flex flex-col flex-grow">
-                   <span className="text-xs font-bold uppercase tracking-wider text-brand-500 mb-2">{t.category}</span>
-                   <h3 className="text-2xl font-heading font-bold text-brand-900 mb-3">{t.title}</h3>
-                   <p className="text-gray-600 mb-6 flex-grow">{t.desc}</p>
-                   <div className="flex items-center text-brand-600 font-bold text-sm gap-2 group-hover:gap-4 transition-all">
-                      Book Consultation <ArrowRight className="w-4 h-4" />
-                   </div>
-                </div>
-             </Link>
-           ))}
-        </div>
+          <Row className="gy-4">
+             {treatments.map((t, i) => (
+               <Col md={6} lg={4} key={i}>
+                 <Link 
+                   to="/contact" 
+                   className="text-decoration-none"
+                 >
+                   <Card className="h-100 border border-brand-50 rounded-4 overflow-hidden shadow-sm d-flex flex-column" style={{ transition: 'box-shadow 0.3s' }} onMouseOver={e => e.currentTarget.classList.add('shadow-lg')} onMouseOut={e => e.currentTarget.classList.remove('shadow-lg')}>
+                      <div className="overflow-hidden" style={{ height: '200px' }}>
+                         <Card.Img variant="top" src={t.img} alt={t.title} className="w-100 h-100 object-fit-cover" style={{ transition: 'transform 0.7s' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.1)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'} />
+                      </div>
+                      <Card.Body className="p-4 d-flex flex-column">
+                         <span className="small fw-bold text-uppercase tracking-wider text-brand-500 mb-2 d-block">{t.category}</span>
+                         <Card.Title className="h4 font-heading fw-bold text-brand-900 mb-3">{t.title}</Card.Title>
+                         <Card.Text className="text-secondary flex-grow-1">{t.desc}</Card.Text>
+                         <div className="d-flex align-items-center text-brand-600 fw-bold small mt-3">
+                            Book Consultation <ArrowRight size={16} className="ms-2" />
+                         </div>
+                      </Card.Body>
+                   </Card>
+                 </Link>
+               </Col>
+             ))}
+          </Row>
+        </Container>
       </div>
-    </div>
+    </>
   );
 };

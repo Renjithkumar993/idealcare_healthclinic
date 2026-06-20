@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Brand colors mapping to Bootstrap */
+  --bs-primary: #348773; /* Brand 500 */
+  --bs-primary-rgb: 52, 135, 115;
+  --bs-secondary: #e07a5f; /* Coral 500 */
+  --bs-secondary-rgb: 224, 122, 95;
+  --bs-info: #7ec2ad; /* Brand 300 */
+  --bs-light: #fdfcf8; /* Sand 50 */
+  --bs-dark: #1a3a34; /* Brand 900 */
+  
+  --brand-50: #f0f9f6;
+  --brand-100: #d5ece4;
+  --brand-200: #aedbcb;
+  --brand-300: #7ec2ad;
+  --brand-400: #52a38d;
+  --brand-500: #348773;
+  --brand-600: #256d5d;
+  --brand-700: #20574b;
+  --brand-800: #1d463d;
+  --brand-900: #1a3a34;
+
+  --sand-50: #fdfcf8;
+  --sand-100: #f7f4ec;
+  --sand-200: #ede6d3;
+  --sand-300: #e0d2b1;
+  --sand-800: #5e5036;
+  --sand-900: #4d412e;
+
+  --coral-500: #e07a5f;
+  --coral-600: #c25e42;
+  
+  --bs-body-font-family: 'Outfit', sans-serif;
+  --bs-heading-font-family: 'Quicksand', sans-serif;
+  --bs-body-bg: var(--sand-50);
+  --bs-body-color: var(--brand-900);
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--bs-heading-font-family);
+  font-weight: 700;
+}
+
+.blob-shape {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+
+/* Base resets */
+body {
+  font-family: var(--bs-body-font-family);
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.text-brand-900 { color: var(--brand-900); }
+.text-brand-800 { color: var(--brand-800); }
+.text-brand-700 { color: var(--brand-700); }
+.text-brand-600 { color: var(--brand-600); }
+.text-brand-500 { color: var(--brand-500); }
+.text-brand-400 { color: var(--brand-400); }
+.text-brand-300 { color: var(--brand-300); }
+.text-brand-200 { color: var(--brand-200); }
+.text-brand-100 { color: var(--brand-100); }
+.text-brand-50 { color: var(--brand-50); }
+
+.bg-brand-900 { background-color: var(--brand-900); }
+.bg-brand-800 { background-color: var(--brand-800); }
+.bg-brand-700 { background-color: var(--brand-700); }
+.bg-brand-600 { background-color: var(--brand-600); }
+.bg-brand-500 { background-color: var(--brand-500); }
+.bg-brand-400 { background-color: var(--brand-400); }
+.bg-brand-300 { background-color: var(--brand-300); }
+.bg-brand-200 { background-color: var(--brand-200); }
+.bg-brand-100 { background-color: var(--brand-100); }
+.bg-brand-50 { background-color: var(--brand-50); }
+
+.text-sand-900 { color: var(--sand-900); }
+.text-sand-800 { color: var(--sand-800); }
+.bg-sand-50 { background-color: var(--sand-50); }
+.bg-sand-100 { background-color: var(--sand-100); }
+.bg-sand-200 { background-color: var(--sand-200); }
+.bg-sand-300 { background-color: var(--sand-300); }
+
+.bg-coral-500 { background-color: var(--coral-500); }
+.bg-coral-600 { background-color: var(--coral-600); }
+.text-coral-500 { color: var(--coral-500); }
+
+.font-heading { font-family: var(--bs-heading-font-family); }
+.font-sans { font-family: var(--bs-body-font-family); }

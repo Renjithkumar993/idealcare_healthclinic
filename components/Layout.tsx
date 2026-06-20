@@ -1,160 +1,117 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { Menu, X, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { Container, Navbar, Nav, Row, Col, Button as BootstrapButton } from 'react-bootstrap';
+import { Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
-const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const NavigationBar: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    setIsOpen(false);
     window.scrollTo(0, 0);
   }, [location]);
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Treatments', path: '/treatments' },
-    { name: 'Appointments', path: '/online-clinic' },
-  ];
-
   return (
-    <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-brand-100 transition-all duration-300">
-        <div className="w-full px-6 md:px-12 h-20 flex justify-between items-center max-w-7xl mx-auto">
-          {/* Logo */}
-          <NavLink to="/" className="flex flex-col">
-            <span className="font-heading text-2xl font-bold text-brand-800 tracking-tight">
-              Ideal Cure.
-            </span>
-            <span className="text-[10px] font-sans font-medium uppercase tracking-widest text-brand-500">
-              Homeopathy
-            </span>
-          </NavLink>
+    <Navbar expand="md" fixed="top" className="bg-white bg-opacity-75 shadow-sm border-bottom border-light" style={{ backdropFilter: 'blur(10px)' }}>
+      <Container>
+        <Navbar.Brand as={NavLink} to="/" className="d-flex flex-column lh-1">
+          <span className="h4 mb-0 fw-bold text-brand-800 font-heading">Ideal Cure.</span>
+          <span className="text-uppercase text-brand-500 font-sans" style={{ fontSize: '0.65rem', letterSpacing: '0.1em' }}>Homeopathy</span>
+        </Navbar.Brand>
+        
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className="border-0 shadow-none text-brand-800" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mx-auto bg-brand-50 rounded-pill px-4 py-1 border border-brand-100 d-none d-md-flex align-items-center gap-2">
+            <Nav.Link as={NavLink} to="/" className="text-secondary-emphasis fw-medium px-3 rounded-pill" style={{ transition: 'color 0.3s' }}>Home</Nav.Link>
+            <Nav.Link as={NavLink} to="/about" className="text-secondary-emphasis fw-medium px-3 rounded-pill" style={{ transition: 'color 0.3s' }}>About</Nav.Link>
+            <Nav.Link as={NavLink} to="/treatments" className="text-secondary-emphasis fw-medium px-3 rounded-pill" style={{ transition: 'color 0.3s' }}>Treatments</Nav.Link>
+            <Nav.Link as={NavLink} to="/online-clinic" className="text-secondary-emphasis fw-medium px-3 rounded-pill" style={{ transition: 'color 0.3s' }}>Appointments</Nav.Link>
+          </Nav>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8 bg-brand-50/50 px-8 py-2 rounded-full border border-brand-100">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.path}
-                to={link.path}
-                className={({ isActive }) =>
-                  `text-sm font-medium transition-colors duration-300 ${
-                    isActive ? 'text-brand-600 font-bold' : 'text-gray-500 hover:text-brand-500'
-                  }`
-                }
-              >
-                {link.name}
-              </NavLink>
-            ))}
-          </div>
+          {/* Mobile links without background */}
+          <Nav className="d-md-none mt-3">
+             <Nav.Link as={NavLink} to="/" className="fs-3 fw-bold font-heading text-brand-900">Home</Nav.Link>
+             <Nav.Link as={NavLink} to="/about" className="fs-3 fw-bold font-heading text-brand-900">About</Nav.Link>
+             <Nav.Link as={NavLink} to="/treatments" className="fs-3 fw-bold font-heading text-brand-900">Treatments</Nav.Link>
+             <Nav.Link as={NavLink} to="/online-clinic" className="fs-3 fw-bold font-heading text-brand-900">Appointments</Nav.Link>
+          </Nav>
 
-          {/* CTA */}
-          <div className="flex items-center gap-4">
-            <NavLink 
-              to="/contact" 
-              className="hidden md:inline-flex px-6 py-2.5 bg-brand-500 text-white text-sm font-bold rounded-full hover:bg-brand-600 transition-all shadow-lg shadow-brand-500/20 hover:-translate-y-0.5"
-            >
+          <div className="d-flex mt-3 mt-md-0">
+            <BootstrapButton as={NavLink} to="/contact" variant="primary" className="rounded-pill px-4 fw-bold shadow-sm w-100">
               Book Now
-            </NavLink>
-            <button 
-              onClick={() => setIsOpen(!isOpen)} 
-              className="md:hidden p-2 text-brand-800 bg-brand-50 rounded-lg"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            </BootstrapButton>
           </div>
-        </div>
-      </nav>
-
-      {/* Mobile Menu */}
-      <div 
-        className={`fixed inset-0 bg-white z-40 flex flex-col pt-32 px-8 gap-6 transition-transform duration-300 ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
-        {navLinks.map((link) => (
-          <NavLink
-            key={link.path}
-            to={link.path}
-            className="text-3xl font-heading font-bold text-brand-900 hover:text-brand-500"
-          >
-            {link.name}
-          </NavLink>
-        ))}
-        <NavLink to="/contact" className="mt-8 px-6 py-4 bg-brand-500 text-white text-center rounded-xl font-bold text-lg">
-          Book Appointment
-        </NavLink>
-      </div>
-    </>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-brand-900 text-white pt-20 pb-10 rounded-t-[3rem] mt-20">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 border-b border-brand-800 pb-16">
-          <div className="space-y-6">
-            <h3 className="font-heading text-2xl font-bold text-brand-100">Ideal Cure.</h3>
-            <p className="text-brand-200/80 leading-relaxed text-sm">
+    <footer className="bg-brand-900 text-white pt-5 pb-4 mt-5" style={{ borderTopLeftRadius: '3rem', borderTopRightRadius: '3rem' }}>
+      <Container className="pt-4">
+        <Row className="gy-4 border-bottom border-brand-800 pb-5">
+          <Col md={6} lg={3}>
+            <h3 className="font-heading h4 fw-bold text-brand-100 mb-3">Ideal Cure.</h3>
+            <p className="text-brand-200 small lh-lg">
               Empowering your health journey with natural, effective, and holistic homeopathic care.
             </p>
-          </div>
+          </Col>
           
-          <div>
-            <h4 className="font-bold mb-6 text-brand-300">Contact</h4>
-            <ul className="space-y-4 text-brand-100/80 text-sm">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-brand-400 shrink-0" />
+          <Col md={6} lg={3}>
+            <h4 className="fw-bold mb-4 text-brand-300 fs-6">Contact</h4>
+            <ul className="list-unstyled text-brand-100 small d-flex flex-column gap-3">
+              <li className="d-flex align-items-start gap-2">
+                <MapPin className="text-brand-400 flex-shrink-0" size={20} />
                 <span>Unit 1 - 151 Main St,<br/> Fredericton, NB E3C 1A7</span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-brand-400" />
+              <li className="d-flex align-items-center gap-2">
+                <Phone className="text-brand-400" size={20} />
                 <span>(506)-461-7535</span>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-brand-400" />
+              <li className="d-flex align-items-center gap-2">
+                <Mail className="text-brand-400" size={20} />
                 <span>contact@idealcurehomeopathy.com</span>
               </li>
             </ul>
-          </div>
+          </Col>
 
-          <div>
-            <h4 className="font-bold mb-6 text-brand-300">Links</h4>
-            <ul className="space-y-3 text-sm text-brand-100/80">
-              <li><NavLink to="/about" className="hover:text-white">About Madhu</NavLink></li>
-              <li><NavLink to="/treatments" className="hover:text-white">Our Treatments</NavLink></li>
-              <li><NavLink to="/online-clinic" className="hover:text-white">Online Clinic</NavLink></li>
-              <li><NavLink to="/contact" className="hover:text-white">Book Appointment</NavLink></li>
+          <Col md={6} lg={3}>
+            <h4 className="fw-bold mb-4 text-brand-300 fs-6">Links</h4>
+            <ul className="list-unstyled small d-flex flex-column gap-2">
+              <li><NavLink to="/about" className="text-brand-100 text-decoration-none">About Madhu</NavLink></li>
+              <li><NavLink to="/treatments" className="text-brand-100 text-decoration-none">Our Treatments</NavLink></li>
+              <li><NavLink to="/online-clinic" className="text-brand-100 text-decoration-none">Online Clinic</NavLink></li>
+              <li><NavLink to="/contact" className="text-brand-100 text-decoration-none">Book Appointment</NavLink></li>
             </ul>
-          </div>
+          </Col>
 
-          <div>
-            <h4 className="font-bold mb-6 text-brand-300">Follow Us</h4>
+          <Col md={6} lg={3}>
+            <h4 className="fw-bold mb-4 text-brand-300 fs-6">Follow Us</h4>
             <a 
               href="https://www.instagram.com/idealcurehomeopathy/" 
               target="_blank" 
               rel="noreferrer"
-              className="inline-flex items-center justify-center w-12 h-12 bg-brand-800 rounded-2xl hover:bg-brand-700 transition-colors"
+              className="d-inline-flex align-items-center justify-content-center bg-brand-800 rounded-3 text-white text-decoration-none"
+              style={{ width: '48px', height: '48px', transition: 'background-color 0.3s' }}
             >
-              <Instagram className="w-6 h-6" />
+              <Instagram size={24} />
             </a>
-          </div>
-        </div>
-        <div className="pt-8 text-center text-sm text-brand-400">
+          </Col>
+        </Row>
+        <div className="pt-4 text-center small text-brand-400">
           © {new Date().getFullYear()} Ideal Cure Homeopathy. All rights reserved.
         </div>
-      </div>
+      </Container>
     </footer>
   );
 };
 
 export const Layout: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col font-sans text-gray-800 bg-sand-50">
-      <Navbar />
-      <main className="flex-grow pt-20">
+    <div className="min-vh-100 d-flex flex-column font-sans text-brand-900 bg-sand-50">
+      <NavigationBar />
+      <main className="flex-grow-1" style={{ paddingTop: '80px' }}>
         <Outlet />
       </main>
       <Footer />

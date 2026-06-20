@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronRight, Home } from 'lucide-react';
+import { Breadcrumb } from 'react-bootstrap';
+import { Home, ChevronRight } from 'lucide-react';
 
 export const Breadcrumbs: React.FC = () => {
   const location = useLocation();
@@ -15,31 +15,31 @@ export const Breadcrumbs: React.FC = () => {
   };
 
   return (
-    <nav className="flex items-center text-sm font-medium text-slate-500 mb-8 animate-fade-in-up">
-      <Link to="/" className="hover:text-brand-600 transition-colors flex items-center">
-        <Home className="w-4 h-4 mr-1" />
-        Home
+    <div className="d-flex align-items-center mb-4">
+      <Link to="/" className="text-decoration-none text-secondary d-flex align-items-center me-2">
+        <Home className="me-1" size={16} /> Home
       </Link>
       {pathnames.map((name, index) => {
         const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
         const isLast = index === pathnames.length - 1;
         const displayName = routeNameMap[name] || name;
 
-        return (
-          <span key={name} className="flex items-center">
-            <ChevronRight className="w-4 h-4 mx-2 text-slate-300" />
-            {isLast ? (
-              <span className="text-brand-600 font-bold bg-brand-50 px-3 py-1 rounded-full">
-                {displayName}
-              </span>
-            ) : (
-              <Link to={routeTo} className="hover:text-brand-600 transition-colors">
-                {displayName}
-              </Link>
-            )}
-          </span>
+        return isLast ? (
+          <div key={name} className="d-flex align-items-center">
+            <ChevronRight className="mx-2 text-black-50" size={16} />
+            <span className="text-brand-600 fw-bold bg-brand-50 px-3 py-1 rounded-pill">
+              {displayName}
+            </span>
+          </div>
+        ) : (
+          <div key={name} className="d-flex align-items-center">
+             <ChevronRight className="mx-2 text-black-50" size={16} />
+             <Link to={routeTo} className="text-decoration-none text-secondary">
+               {displayName}
+             </Link>
+          </div>
         );
       })}
-    </nav>
+    </div>
   );
 };
